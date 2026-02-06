@@ -23,7 +23,7 @@ export default function Hero() {
                     créer et grandir
                 </h1>
                 <p className="text-lg md:text-2xl font-light max-w-2xl mx-auto drop-shadow-sm">
-                    Votre boutique de peluches, ateliers créatifs et organisation d'anniversaires à Puteaux.
+                    Votre boutique de jouets, ateliers créatifs et organisation d'anniversaires à Puteaux.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                     <Link

@@ -50,7 +50,7 @@ export default function ContactPage() {
                                 <ul className="text-muted-foreground space-y-1 text-sm">
                                     <li className="flex justify-between w-48"><span>Lundi :</span> <span>Fermé</span></li>
                                     <li className="flex justify-between w-48"><span>Mardi - Samedi :</span> <span>10h - 19h</span></li>
-                                    <li className="flex justify-between w-48"><span>Dimanche :</span> <span>Fermé</span></li>
+                                    <li className="flex justify-between w-48"><span>Dimanche :</span> <span>10h - 13h</span></li>
                                 </ul>
                             </div>
                         </div>

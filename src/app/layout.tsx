@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Quicksand } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -26,12 +25,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${nunito.variable} ${quicksand.variable}`}>
-      <body className="antialiased font-sans min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+      <body className="antialiased font-sans min-h-screen">
+        {children}
       </body>
     </html>
   );

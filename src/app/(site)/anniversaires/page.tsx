@@ -36,7 +36,7 @@ export default function AnniversairesPage() {
                         <div className="relative rounded-3xl overflow-hidden aspect-video shadow-lg mb-8">
                             {/* Placeholder using vitrine image for now since we don't have distinct birthday room pics */}
                             <Image
-                                src="/images/ldmp-vitrine.jpg"
+                                src="/images/birthday-party.jpg"
                                 alt="Espace Anniversaire"
                                 fill
                                 className="object-cover"
