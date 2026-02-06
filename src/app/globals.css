@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFDF7; /* Off-white/Cream */
+  --foreground: #264653; /* Charcoal */
+  
+  /* LMDPL Palette */
+  --primary: #F4A261; /* Sandy Orange */
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #2A9D8F; /* Persian Green/Teal */
+  --secondary-foreground: #FFFFFF;
+  
+  --accent: #E9C46A; /* Warm Yellow */
+  --accent-foreground: #264653;
+  
+  --destructive: #e76f51; /* Burnt Sienna */
+  --destructive-foreground: #ffffff;
+  
+  --muted: #f4f1de;
+  --muted-foreground: #6b7280;
+
+  --card: #ffffff;
+  --card-foreground: #264653;
+
+  --border: #e5e7eb;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-border: var(--border);
+
+  --font-sans: var(--font-quicksand), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-nunito), ui-serif, system-ui, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
