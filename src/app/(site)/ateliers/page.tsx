@@ -1,5 +1,5 @@
 import WorkshopList from "@/components/Workshops/WorkshopList";
-import { workshops } from "@/data/workshops";
+import { getAteliers } from "@/lib/getAteliers";
 import { CalendarRange, Sparkles } from "lucide-react";
 
 export const metadata = {
@@ -7,9 +7,11 @@ export const metadata = {
     description: "Des activités créatives et ludiques pour les enfants à Puteaux.",
 };
 
-export default function AteliersPage() {
-    const regularWorkshops = workshops.filter((w) => w.type === "atelier");
-    const camps = workshops.filter((w) => w.type === "stage");
+export default async function AteliersPage() {
+    const ateliers = await getAteliers();
+
+    const regularWorkshops = ateliers.filter((w) => w.period === "year");
+    const holidaysWorkshops = ateliers.filter((w) => w.period === "holidays");
 
     return (
         <div className="bg-background min-h-screen pb-20">
@@ -55,7 +57,7 @@ export default function AteliersPage() {
                             <p className="text-muted-foreground">Pendant les vacances scolaires (Zone C)</p>
                         </div>
                     </div>
-                    <WorkshopList workshops={camps} />
+                    <WorkshopList workshops={holidaysWorkshops} />
                 </section>
 
                 {/* Note on Codeacademy */}

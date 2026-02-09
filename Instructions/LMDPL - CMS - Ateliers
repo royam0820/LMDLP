@@ -1,0 +1,171 @@
+Here is a **clean, unambiguous, model-ready revision** of your demand, written as a **functional specification / planning brief** that an LLM (or a developer using Sanity + Next.js) can correctly interpret and implement.
+
+I’ve deliberately removed ambiguity, separated concerns (CMS vs frontend vs behavior), and made the decision rules explicit.
+
+---
+
+## Objective
+
+Structure the **Ateliers** section using **Sanity CMS** so that a non-technical user (the store owner) can manage ateliers content, **while preserving the current UI layout** of the `/ateliers` page.
+
+Only **pricing logic** and **“Réserver” button behavior** must change, based on the atelier type and organizer.
+
+---
+
+## High-Level Requirements
+
+1. **All ateliers must be managed via Sanity CMS**
+2. The current visual layout of the Ateliers page remains unchanged
+3. Ateliers are categorized by:
+
+   * **Period**:
+
+     * `À l’année (année scolaire)`
+     * `Vacances scolaires`
+   * **Organizer**:
+
+     * `Codeacademy123`
+     * `La Maison des Petits Loups` (store / external ateliers)
+
+---
+
+## Atelier Data Model (Sanity – Conceptual)
+
+Each atelier must contain at least:
+
+* `title`
+* `description`
+* `ageRange`
+* `scheduleText` (human-readable: e.g. “Mercredi 14h–15h30”)
+* `periodType`
+
+  * `school_year`
+  * `school_holidays`
+* `organizer`
+
+  * `codeacademy123`
+  * `store`
+* `sessionsCount` (number)
+* `priceTotal` (number, EUR)
+* `startDate` (optional, required for school year)
+* `endDate` (optional, required for school year)
+* `reservationMode` (derived or explicit, see below)
+
+---
+
+## Pricing Rules (Critical Change)
+
+### 1. **À l’année – Codeacademy123**
+
+* Pricing is **global**, not per session
+* Example:
+
+  * Robotics
+  * **10 sessions**
+  * **440 € total**
+  * Start date: `XX/XX/XXXX`
+  * End date: `XX/XX/XXXX`
+  * Sessions occur **outside school holidays**
+
+**Displayed price format (frontend):**
+
+> `440 € – 10 séances (du 15 septembre au 15 décembre)`
+
+---
+
+### 2. **Vacances scolaires – Codeacademy123**
+
+* Fixed short programs
+* Examples:
+
+  * Vibe Coding
+
+    * 5 sessions → **200 €**
+  * Encre Virtuelle
+
+    * 3 sessions → **120 €**
+
+**Displayed price format:**
+
+> `200 € – 5 séances (vacances scolaires)`
+
+---
+
+### 3. **Non-Codeacademy123 ateliers (store ateliers)**
+
+* Price display can remain simple or optional
+* No external booking platform involved
+
+---
+
+## “Réserver” Button Behavior (Critical Change)
+
+### Rule 1 — **If organizer = Codeacademy123**
+
+* The **Réserver** button must:
+
+  * Redirect to an **external URL**
+  * Example:
+    `https://www.codeacademy123.com/reservation/...`
+* The URL can be:
+
+  * Global (same for all Codeacademy123 ateliers), or
+  * Stored per atelier in Sanity (preferred, more flexible)
+
+---
+
+### Rule 2 — **If organizer ≠ Codeacademy123 (store ateliers)**
+
+* Clicking **Réserver** must:
+
+  * Trigger a **mailto link**
+  * Recipient:
+    `lamaisondespetitsloups@gmail.com`
+  * Email should be prefilled with:
+
+    * Atelier title
+    * Period (année / vacances)
+    * Age range
+    * Schedule
+
+**Example mailto behavior:**
+
+> Subject: Demande de réservation – Atelier Arts Créatifs
+> Body:
+> Bonjour,
+> Je souhaite des informations pour l’atelier “Arts Créatifs” (4–8 ans), le mercredi 14h–15h30.
+
+---
+
+## Frontend Logic Summary (Decision Table)
+
+| Organizer      | Period    | Price Display                  | Réserver Action                           |
+| -------------- | --------- | ------------------------------ | ----------------------------------------- |
+| Codeacademy123 | À l’année | Total price + sessions + dates | Redirect to Codeacademy123 URL            |
+| Codeacademy123 | Vacances  | Total price + sessions         | Redirect to Codeacademy123 URL            |
+| Store          | Any       | Optional / simple              | `mailto:lamaisondespetitsloups@gmail.com` |
+
+---
+
+## CMS Usability Goal
+
+The store owner must be able to:
+
+* Add / edit ateliers without touching code
+* Set:
+
+  * Number of sessions
+  * Total price
+  * Period type
+  * Organizer
+* Have the **correct price formatting and reservation behavior applied automatically** on the frontend
+
+---
+
+## Non-Goals (Out of Scope for V0)
+
+* Online payment
+* Availability / seat management
+* Calendar booking
+* Authentication
+

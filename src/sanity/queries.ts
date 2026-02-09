@@ -19,3 +19,20 @@ export const FEATURED_PRODUCTS_QUERY = defineQuery(`*[_type == "product" && isNe
   description,
   isNew
 }`);
+
+export const ATELIERS_QUERY = defineQuery(`*[_type == "atelier"] | order(period desc, title asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  image,
+  description,
+  ageRange,
+  schedule,
+  period,
+  organizer,
+  price,
+  sessionsCount,
+  startDate,
+  endDate,
+  bookingUrl
+}`);
