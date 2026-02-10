@@ -78,6 +78,23 @@ Utilisé pour les cours à l'année et les stages vacances.
 - Les 3 derniers avis sont affichés sur la page d'accueil.
 - Une page dédiée `/temoignages` liste l'ensemble des avis.
 
+---
+
+### 💡 Astuces & FAQ CMS
+
+#### Comment supprimer un Élément (Atelier, Produit, Témoignage) ?
+1.  Ouvrez l'élément que vous souhaitez supprimer dans le Studio.
+2.  Cliquez sur les **trois petits points (...)** situés en bas à droite de l'écran (à côté du bouton vert "Publish").
+3.  Sélectionnez **Delete** (Supprimer) dans la liste.
+4.  Confirmez la suppression. **Attention, c'est irréversible !**
+
+#### Comment modifier l'ordre des éléments ?
+- **Ateliers** : Triés automatiquement par période et date.
+- **Produits** : Triés par nom.
+- **Témoignages** : Triés par date (du plus récent au plus ancien).
+
+---
+
 ### Modifications Récentes
 - **Images des Ateliers** : La liste des ateliers utilise désormais un ratio d'image **16:9** (`aspect-video`). Les images sont affichées en entier sans être coupées verticalement de manière arbitraire.
 - **Détails Atelier** : La description dans la liste est tronquée. Un lien "Lire la suite" permet d'accéder à une page dédiée (`/ateliers/[slug]`) avec toutes les informations.
