@@ -22,6 +22,7 @@ Ce projet est une application **Next.js** connectée à **Sanity CMS** pour la g
   - Partenariat avec **Codeacademy123** mis en avant.
   - Page de détail pour chaque atelier avec bouton "Lire la suite".
 - **Contact** : Informations pratiques (horaires, adresse, map).
+- **Témoignages** : Section dynamique affichant les derniers avis clients (gérés via Sanity).
 
 ## 🛠️ Installation & Démarrage
 
@@ -71,6 +72,11 @@ Utilisé pour les cours à l'année et les stages vacances.
 
 #### 2. Produits (`product`)
 - Gestion simple des articles mis en avant dans la section Boutique.
+
+#### 3. Témoignages (`testimonial`)
+- Permet d'ajouter des avis clients (Nom, Texte, Note 1-5, Date).
+- Les 3 derniers avis sont affichés sur la page d'accueil.
+- Une page dédiée `/temoignages` liste l'ensemble des avis.
 
 ### Modifications Récentes
 - **Images des Ateliers** : La liste des ateliers utilise désormais un ratio d'image **16:9** (`aspect-video`). Les images sont affichées en entier sans être coupées verticalement de manière arbitraire.
