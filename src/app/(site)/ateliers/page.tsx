@@ -62,13 +62,21 @@ export default async function AteliersPage() {
 
                 {/* Note on Codeacademy */}
                 <div className="bg-accent/10 border border-accent/20 rounded-2xl p-8 text-center">
-                    <h3 className="font-heading font-bold text-xl text-foreground mb-2">
+                    <h3 className="font-heading font-bold text-xl text-foreground mb-4">
                         Partenariat Codeacademy123
                     </h3>
-                    <p className="text-muted-foreground max-w-2xl mx-auto">
-                        Retrouvez nos ateliers exclusifs de "Robo-Code" en partenariat avec Codeacademy123.
-                        Une approche ludique pour comprendre le monde numérique sans les écrans.
+                    <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+                        Retrouvez tous nos ateliers numériques en partenariat avec <strong>Codeacademy123</strong>.
+                        Des activités ludiques pour comprendre le monde numérique, s'initier au code et découvrir les pouvoirs de l'IA.
                     </p>
+                    <a
+                        href="https://www.codeacademy123.com/book-online"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors"
+                    >
+                        Réserver un atelier Codeacademy123
+                    </a>
                 </div>
 
             </div>
