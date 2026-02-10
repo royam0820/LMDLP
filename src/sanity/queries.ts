@@ -36,3 +36,11 @@ export const ATELIERS_QUERY = defineQuery(`*[_type == "atelier"] | order(period 
   endDate,
   bookingUrl
 }`);
+
+export const TESTIMONIALS_QUERY = defineQuery(`*[_type == "testimonial"] | order(date desc, _createdAt desc) {
+  _id,
+  name,
+  text,
+  rating,
+  date
+}`);
