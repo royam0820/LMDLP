@@ -88,6 +88,10 @@ Utilisé pour les cours à l'année et les stages vacances.
 3.  Sélectionnez **Delete** (Supprimer) dans la liste.
 4.  Confirmez la suppression. **Attention, c'est irréversible !**
 
+> **Astuce : "Unpublish" vs "Delete"**
+> *   **Unpublish (Dépublier)** : Retire l'élément du site web mais le garde en brouillon dans Sanity. Utile si vous voulez le réutiliser plus tard (ex: un atelier saisonnier).
+> *   **Delete (Supprimer)** : Efface définitivement l'élément. À utiliser si vous êtes sûr de ne plus jamais en avoir besoin.
+
 #### Comment modifier l'ordre des éléments ?
 - **Ateliers** : Triés automatiquement par période et date.
 - **Produits** : Triés par nom.
