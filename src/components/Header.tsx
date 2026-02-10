@@ -29,7 +29,7 @@ export default function Header() {
                             className="object-cover"
                         />
                     </div>
-                    <span className="font-heading font-bold text-xl md:text-2xl text-primary hidden sm:block">
+                    <span className="font-heading font-bold text-lg md:text-2xl text-primary leading-tight">
                         La Maison des Petits Loups
                     </span>
                 </Link>
