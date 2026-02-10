@@ -126,6 +126,26 @@ Actuellement, le projet est déployé sur le plan **Hobby** (Gratuit) de Vercel.
 
 C'est un excellent point de départ pour tester le site sans frais !
 
+---
+
+## 9. Note sur le Plan Sanity (Free Tier)
+
+Le projet utilise le plan **Free** de Sanity, qui est extrêmement généreux pour un usage standard.
+
+**Inclus Gratuitement (par mois) :**
+*   **Utilisateurs** : Jusqu'à 20 personnes peuvent gérer le contenu (largement suffisant pour l'équipe).
+*   **Requêtes API** : 200 000 requêtes/mois.
+    *   *Concrètement* : Cela représente des milliers de visiteurs par jour.
+*   **Bande Passante (Images/Assets)** : 10 Go/mois.
+*   **Stockage** : 10 Go de données.
+
+**Coût :**
+*   **0€ / mois** tant que ces limites ne sont pas dépassées.
+*   Sanity ne bloque pas le site brutalement mais vous prévient par email si vous approchez des limites.
+*   Le passage à une offre payante se fait "à la carte" (pay-as-you-go) pour les ressources supplémentaires, ce qui est très économique.
+
+**Conclusion** : Pour **La Maison des Petits Loups**, ce plan gratuit devrait suffire pendant très longtemps, même avec une bonne croissance du trafic !
+
 
 
 ---
