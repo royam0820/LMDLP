@@ -24,6 +24,8 @@ Dans l'écran de configuration "Configure Project" :
    | `NEXT_PUBLIC_SANITY_DATASET` | `production` |
    | `NEXT_PUBLIC_SANITY_API_VERSION` | `2024-01-01` |
 
+   > **⚠️ IMPORTANT** : Assurez-vous que `NEXT_PUBLIC_SANITY_DATASET` est bien sur **`production`** sur Vercel, même si vous utilisez `development` en local.
+
    *(Ajoutez-les une par une).*
 
 ## 4. Déployer

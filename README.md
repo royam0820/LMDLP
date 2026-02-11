@@ -42,9 +42,11 @@ Créez un fichier `.env.local` à la racine du projet avec vos identifiants Sani
 
 ```bash
 NEXT_PUBLIC_SANITY_PROJECT_ID=votre_project_id
-NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_DATASET=development
 NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
 ```
+
+> **Note**: Pour plus de détails sur l'environnement de développement (et pourquoi on utilise `development`), voir le guide : [Documentation Setup Sanity](Instructions/SANITY_SETUP.md).
 
 ### 3. Lancer le serveur de développement
 ```bash
