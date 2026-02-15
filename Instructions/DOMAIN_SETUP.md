@@ -49,8 +49,21 @@ Once your domain is active (e.g., you can visit `https://lmdpl.fr`), you must te
 
 **Why?** If you skip this, the Studio (`/studio`) will not load on your new domain, and you might see CORS errors in the console.
 
+## Bonus: Activate Free Email (Start10M)
+With every OVH domain, you are entitled to **1 free email account** (5GB storage).
+
+1.  In your OVH Manager, go to **Web Cloud** > **Domains** > **lmdpl.fr**.
+2.  Look for "Web Hosting" or "Hébergement Web" in the "General Information" box.
+3.  If it says "None" or "Aucun", click on the **...** (three dots) next to it and select **Activate included hosting** (Start10M).
+4.  Follow the activation steps (it's free).
+5.  Once active (can take ~15 mins), go to the **Emails** tab.
+6.  Click **Create an email address**.
+7.  Create your address (e.g., `contact@lmdpl.fr`).
+8.  You can then access your emails via OVH Webmail (https://www.ovh.com/fr/mail/) or configure it on your phone/Outlook.
+
 ## Summary Checklist
 - [ ] Add domain in Vercel.
 - [ ] Add A Record in OVH.
 - [ ] Add CNAME Record in OVH.
 - [ ] Add CORS origins in Sanity Management Dashboard.
+- [ ] (Optional) Activate Start10M hosting for free email.
