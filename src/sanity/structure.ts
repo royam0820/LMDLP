@@ -12,6 +12,13 @@ export const structure: StructureResolver = (S) =>
             .schemaType('homePage')
             .documentId('homePage')
         ),
+      S.listItem()
+        .title('Page Anniversaires')
+        .child(
+          S.document()
+            .schemaType('anniversaryPage')
+            .documentId('anniversaryPage')
+        ),
       S.divider(),
       S.documentTypeListItem('post').title('Articles de Blog'),
       S.documentTypeListItem('category').title('Catégories Blog'),
@@ -22,6 +29,6 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('testimonial').title('Témoignages'),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !['post', 'category', 'author', 'product', 'atelier', 'testimonial', 'homePage'].includes(item.getId()!),
+        (item) => item.getId() && !['post', 'category', 'author', 'product', 'atelier', 'testimonial', 'homePage', 'anniversaryPage'].includes(item.getId()!),
       ),
     ])

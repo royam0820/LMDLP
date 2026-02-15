@@ -1,13 +1,41 @@
 import BookingForm from "@/components/Forms/BookingForm";
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { getAnniversaryPage } from "@/lib/getAnniversaryPage";
 
 export const metadata = {
     title: "Anniversaires | La Maison des Petits Loups",
     description: "Organisez un anniversaire inoubliable pour votre enfant à Puteaux.",
 };
 
-export default function AnniversairesPage() {
+export default async function AnniversairesPage() {
+    const data = await getAnniversaryPage();
+
+    // Defaults in case data is missing or not yet populated
+    const pricePerChild = data?.pricePerChild ?? 20;
+    const animatorFee = data?.animatorFee ?? 180;
+    const minChildren = data?.minChildren ?? 8;
+    const assistantFee = data?.assistantFee ?? 90;
+    const deposit = data?.deposit ?? 180;
+    const sundayFee = data?.sundayFee ?? 60;
+    const formulaIncludes = data?.formulaIncludes ?? [
+        "Décoration de la salle selon le thème choisi",
+        "Boissons, friandises & sacs surprises inclus",
+        "Animateur dédié pendant 2 heures",
+        "Espace réservé (jusqu’à 11 enfants avec 1 animateur)",
+        "Gâteau et bougies à apporter par les parents"
+    ];
+
+    // Helper to pick an emoji based on the text content (simple heuristic)
+    const getEmoji = (text: string) => {
+        const lower = text.toLowerCase();
+        if (lower.includes("déco")) return "🎈";
+        if (lower.includes("boisson") || lower.includes("friandise")) return "🧃";
+        if (lower.includes("animateur")) return "👩‍🎨";
+        if (lower.includes("espace")) return "🏠";
+        if (lower.includes("gâteau")) return "🎂";
+        return "✨";
+    };
+
     return (
         <div className="bg-background min-h-screen pb-20">
             {/* Hero Header */}
@@ -51,26 +79,12 @@ export default function AnniversairesPage() {
                                     🎉 Formule Anniversaire – On s’occupe de tout !
                                 </h2>
                                 <ul className="space-y-4 text-lg text-muted-foreground">
-                                    <li className="flex gap-3">
-                                        <span className="shrink-0">🎈</span>
-                                        <span>Décoration de la salle selon le thème choisi</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="shrink-0">🧃</span>
-                                        <span>Boissons, friandises & sacs surprises inclus</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="shrink-0">👩‍🎨</span>
-                                        <span>Animateur dédié pendant 2 heures</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="shrink-0">🏠</span>
-                                        <span>Espace réservé (jusqu’à 11 enfants avec 1 animateur)</span>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="shrink-0">🎂</span>
-                                        <span>Gâteau et bougies à apporter par les parents</span>
-                                    </li>
+                                    {formulaIncludes.map((item, index) => (
+                                        <li key={index} className="flex gap-3">
+                                            <span className="shrink-0">{getEmoji(item)}</span>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
 
@@ -85,7 +99,7 @@ export default function AnniversairesPage() {
                                     <div className="bg-secondary text-white py-2 px-4 rounded-lg text-center font-bold shadow-sm">16h30 – 18h30</div>
                                 </div>
                                 <p className="text-sm text-muted-foreground italic">
-                                    (Samedis et dimanches – supplément de 60€ le dimanche)
+                                    (Samedis et dimanches – supplément de {sundayFee}€ le dimanche)
                                 </p>
                             </div>
 
@@ -95,13 +109,13 @@ export default function AnniversairesPage() {
                                     <span>💰</span> Tarifs
                                 </h3>
                                 <ul className="space-y-2 text-muted-foreground mb-4">
-                                    <li><strong>20€</strong> par enfant</li>
-                                    <li><strong>180€</strong> forfait animateur</li>
-                                    <li>Base minimum : <strong>8 enfants</strong></li>
-                                    <li>À partir de 12 enfants : animateur assistant (<strong>+90€</strong>)</li>
+                                    <li><strong>{pricePerChild}€</strong> par enfant</li>
+                                    <li><strong>{animatorFee}€</strong> forfait animateur</li>
+                                    <li>Base minimum : <strong>{minChildren} enfants</strong></li>
+                                    <li>À partir de 12 enfants : animateur assistant (<strong>+{assistantFee}€</strong>)</li>
                                 </ul>
                                 <div className="bg-white/50 p-3 rounded-lg text-sm border border-primary/10 inline-block">
-                                    Acompte de <strong>180€</strong> à la réservation
+                                    Acompte de <strong>{deposit}€</strong> à la réservation
                                 </div>
                             </div>
 
