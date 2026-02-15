@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/studio/', // Prevent indexing of the studio
         },
-        sitemap: 'https://lmdlp.fr/sitemap.xml',
+        sitemap: 'https://lmdpl.fr/sitemap.xml',
     }
 }

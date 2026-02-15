@@ -16,7 +16,7 @@ const quicksand = Quicksand({
 import JsonLd from "@/components/JsonLd";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lmdlp.fr'),
+  metadataBase: new URL('https://lmdpl.fr'),
   title: {
     default: "La Maison des Petits Loups | Jouets & Ateliers à Puteaux",
     template: "%s | La Maison des Petits Loups"
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "La Maison des Petits Loups",
     description: "Un lieu pour jouer, créer et grandir à Puteaux.",
-    url: 'https://lmdlp.fr',
+    url: 'https://lmdpl.fr',
     siteName: 'La Maison des Petits Loups',
     locale: 'fr_FR',
     type: 'website',

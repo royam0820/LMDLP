@@ -3,7 +3,7 @@ export default function JsonLd() {
         "@context": "https://schema.org",
         "@type": "ToyStore",
         "name": "La Maison des Petits Loups",
-        "image": "https://lmdlp.fr/images/og-image.jpg", // Needs a real image URL
+        "image": "https://lmdpl.fr/images/og-image.jpg", // Needs a real image URL
         "description": "Boutique de jouets, ateliers créatifs et organisation d'anniversaires pour enfants à Puteaux.",
         "address": {
             "@type": "PostalAddress",
@@ -17,7 +17,7 @@ export default function JsonLd() {
             "latitude": 48.8804789,
             "longitude": 2.2395431
         },
-        "url": "https://lmdlp.fr",
+        url: "https://lmdpl.fr",
         "telephone": "+33147759719", // Verify this number
         "openingHoursSpecification": [
             {

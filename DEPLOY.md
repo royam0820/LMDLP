@@ -31,7 +31,7 @@ Dans l'écran de configuration "Configure Project" :
 ## 4. Déployer
 Cliquez sur **"Deploy"**.
 
-Vercel va construire votre site. Une fois terminé (environ 1-2 minutes), vous verrez un écran de félicitations avec le lien vers votre site en ligne (ex: `lmdlp.vercel.app`).
+Vercel va construire votre site. Une fois terminé (environ 1-2 minutes), vous verrez un écran de félicitations avec le lien vers votre site en ligne (ex: `lmdpl.vercel.app`).
 
 ---
 
@@ -42,7 +42,7 @@ Pour que le studio Sanity fonctionne correctement en production et pour éviter 
 2. Sélectionnez votre projet (`vs3o0cqb`).
 3. Allez dans **API** -> **CORS Origins**.
 4. Cliquez sur **Add CORS Origin**.
-5. Ajoutez l'URL fournie par Vercel (ex: `https://lmdlp.vercel.app`).
+5. Ajoutez l'URL fournie par Vercel (ex: `https://lmdpl.vercel.app`).
 6. Cochez **Allow credentials**.
 7. Sauvegardez.
 

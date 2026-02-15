@@ -3,11 +3,13 @@
 Here is a step-by-step guide to connecting your OVH domain to your Vercel project.
 
 ## Step 1: Vercel Configuration
-1.  **Log in to Vercel** and go to your project dashboard (`LMDLP`).
-2.  Go to **Settings** > **Domains**.
-3.  Enter `lmdpl.fr` in the input field and click **Add**.
-4.  Vercel will likely ask you to add `www.lmdpl.fr` as well. Accept this option (Recommended: redirect `www` to non-www or vice-versa).
-5.  Vercel will now provide you with the **DNS Records** you need to add to OVH.
+1.  Connectez-vous à votre tableau de bord **Vercel**.
+2.  Allez dans votre projet **LMDPL**.
+3.  Allez dans **Settings** > **Domains**.
+4.  Entrez votre nom de domaine : `lmdpl.fr` dans le champ d'ajout.
+5.  Cliquez sur **Add**.
+6.  Vercel va probablement aussi suggérer d'ajouter `www.lmdpl.fr`. Acceptez (Add).
+7.  Vercel will now provide you with the **DNS Records** you need to add to OVH.
     *   **A Record** (for the root domain `lmdpl.fr`): Usually `76.76.21.21`
     *   **CNAME Record** (for `www.lmdpl.fr`): `cname.vercel-dns.com`
 
@@ -37,7 +39,7 @@ Here is a step-by-step guide to connecting your OVH domain to your Vercel projec
 Once your domain is active (e.g., you can visit `https://lmdpl.fr`), you must tell Sanity that this new domain is safe to use.
 
 1.  Log in to your **Sanity Project Dashboard** (https://www.sanity.io/manage).
-2.  Select your project (`LMDLP`).
+2.  Select your project (`LMDPL`).
 3.  Go to **API** > **CORS Origins**.
 4.  Click **Add Origin**.
 5.  Enter `https://lmdpl.fr` and `https://www.lmdpl.fr`.
