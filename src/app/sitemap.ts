@@ -34,5 +34,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
     }))
 
-    return [...routes, ...atelierRoutes]
+    // Dynamic routes (Products)
+    const PRODUCTS_SLUG_QUERY = defineQuery(`*[_type == "product" && defined(slug.current)] {
+        "slug": slug.current,
+        _updatedAt
+    }`)
+
+    const products = await client.fetch(PRODUCTS_SLUG_QUERY, {}, { next: { revalidate: 60 } })
+
+    const productRoutes = products.map((product: { slug: string, _updatedAt: string }) => ({
+        url: `${BASE_URL}/boutique/${product.slug}`,
+        lastModified: new Date(product._updatedAt),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }))
+
+    return [...routes, ...atelierRoutes, ...productRoutes]
 }
