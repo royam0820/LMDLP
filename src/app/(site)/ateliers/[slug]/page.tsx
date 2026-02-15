@@ -25,7 +25,7 @@ const ATELIER_BY_SLUG_QUERY = defineQuery(`*[_type == "atelier" && slug.current 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const atelier = await client.fetch(ATELIER_BY_SLUG_QUERY, { slug });
+    const atelier = await client.fetch(ATELIER_BY_SLUG_QUERY, { slug }, { next: { revalidate: 60 } });
 
     if (!atelier) {
         return {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function AtelierPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const atelier = await client.fetch(ATELIER_BY_SLUG_QUERY, { slug });
+    const atelier = await client.fetch(ATELIER_BY_SLUG_QUERY, { slug }, { next: { revalidate: 60 } });
 
     if (!atelier) {
         notFound();

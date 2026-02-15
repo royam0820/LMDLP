@@ -23,7 +23,7 @@ export interface Atelier {
 
 export async function getAteliers(): Promise<Atelier[]> {
     try {
-        const ateliers = await client.fetch(ATELIERS_QUERY);
+        const ateliers = await client.fetch(ATELIERS_QUERY, {}, { next: { revalidate: 60 } });
 
         // Map Sanity results to our interface if needed (mostly for image handling)
         // If no ateliers found (empty array), we could fallback to mock data if we had any, 

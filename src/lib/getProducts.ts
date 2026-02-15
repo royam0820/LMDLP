@@ -16,7 +16,7 @@ const mapSanityToProduct = (sanityItem: any): Product => ({
 
 export async function getProducts(): Promise<Product[]> {
     try {
-        const sanityData = await client.fetch(PRODUCTS_QUERY);
+        const sanityData = await client.fetch(PRODUCTS_QUERY, {}, { next: { revalidate: 60 } });
         if (sanityData && sanityData.length > 0) {
             return sanityData.map(mapSanityToProduct);
         }
@@ -29,7 +29,7 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getFeaturedProducts(): Promise<Product[]> {
     try {
-        const sanityData = await client.fetch(FEATURED_PRODUCTS_QUERY);
+        const sanityData = await client.fetch(FEATURED_PRODUCTS_QUERY, {}, { next: { revalidate: 60 } });
         if (sanityData && sanityData.length > 0) {
             return sanityData.map(mapSanityToProduct);
         }

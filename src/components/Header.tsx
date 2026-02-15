@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import LogoText from "./LogoText";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -29,9 +30,7 @@ export default function Header() {
                             className="object-cover"
                         />
                     </div>
-                    <span className="font-heading font-bold text-lg md:text-2xl text-primary leading-tight">
-                        La Maison des Petits Loups
-                    </span>
+                    <LogoText />
                 </Link>
 
                 {/* Desktop Navigation */}

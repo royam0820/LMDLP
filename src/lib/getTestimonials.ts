@@ -15,7 +15,7 @@ export async function getTestimonials(limit?: number): Promise<Testimonial[]> {
             ? `*[_type == "testimonial"] | order(date desc, _createdAt desc)[0...${limit}] { _id, name, text, rating, date }`
             : TESTIMONIALS_QUERY;
 
-        const testimonials = await client.fetch(query);
+        const testimonials = await client.fetch(query, {}, { next: { revalidate: 60 } });
         return testimonials;
     } catch (error) {
         console.error("Error fetching testimonials:", error);

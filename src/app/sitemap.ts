@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     _updatedAt
   }`)
 
-    const ateliers = await client.fetch(ATELIERS_SLUG_QUERY)
+    const ateliers = await client.fetch(ATELIERS_SLUG_QUERY, {}, { next: { revalidate: 60 } })
 
     const atelierRoutes = ateliers.map((atelier: { slug: string, _updatedAt: string }) => ({
         url: `${BASE_URL}/ateliers/${atelier.slug}`,

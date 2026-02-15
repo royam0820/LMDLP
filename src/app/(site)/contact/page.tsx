@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, Clock } from "lucide-react";
+import { Mail, MapPin, Phone, Clock, SquareParking } from "lucide-react";
 
 export const metadata = {
     title: "Contact | La Maison des Petits Loups",
@@ -37,6 +37,10 @@ export default function ContactPage() {
                                     2 Place du Théâtre <br />
                                     92800 Puteaux
                                 </p>
+                                <div className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
+                                    <SquareParking size={18} className="shrink-0 mt-0.5 text-primary" />
+                                    <span>Parking du Théâtre, une heure de stationnement gratuit</span>
+                                </div>
                             </div>
                         </div>
 

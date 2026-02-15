@@ -43,34 +43,68 @@ export default function AnniversairesPage() {
                             />
                         </div>
 
-                        <div className="prose prose-lg text-muted-foreground">
-                            <h2 className="font-heading font-bold text-3xl text-foreground mb-4">
-                                La Formule "Petits Loups"
-                            </h2>
-                            <p>
-                                Notre espace privatisé à l'étage accueille jusqu'à 12 enfants pour un après-midi festif et créatif.
-                            </p>
+                        <div className="space-y-8">
 
-                            <h3 className="font-heading font-bold text-xl text-foreground mt-6 mb-3">
-                                Ce qui est inclus :
-                            </h3>
-                            <ul className="space-y-4 not-prose">
-                                {[
-                                    "Privatisation de l'espace (2h30)",
-                                    "Animateur dédié pour encadrer le groupe",
-                                    "Atelier créatif au choix (selon l'âge)",
-                                    "Gâteau d'anniversaire fait maison (ou partenaire local)",
-                                    "Boissons et bonbons à volonté",
-                                    "Cartons d'invitation fournis"
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3">
-                                        <div className="bg-green-100 text-green-600 p-1 rounded-full">
-                                            <Check size={16} />
-                                        </div>
-                                        <span className="font-medium text-foreground">{item}</span>
+                            {/* Formula */}
+                            <div>
+                                <h2 className="font-heading font-bold text-2xl md:text-3xl text-primary mb-6">
+                                    🎉 Formule Anniversaire – On s’occupe de tout !
+                                </h2>
+                                <ul className="space-y-4 text-lg text-muted-foreground">
+                                    <li className="flex gap-3">
+                                        <span className="shrink-0">🎈</span>
+                                        <span>Décoration de la salle selon le thème choisi</span>
                                     </li>
-                                ))}
-                            </ul>
+                                    <li className="flex gap-3">
+                                        <span className="shrink-0">🧃</span>
+                                        <span>Boissons, friandises & sacs surprises inclus</span>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="shrink-0">👩‍🎨</span>
+                                        <span>Animateur dédié pendant 2 heures</span>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="shrink-0">🏠</span>
+                                        <span>Espace réservé (jusqu’à 11 enfants avec 1 animateur)</span>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="shrink-0">🎂</span>
+                                        <span>Gâteau et bougies à apporter par les parents</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {/* Slots */}
+                            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                                <h3 className="font-heading font-bold text-xl mb-4 flex items-center gap-2">
+                                    <span>🗓</span> Créneaux disponibles
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                                    <div className="bg-secondary text-white py-2 px-4 rounded-lg text-center font-bold shadow-sm">10h30 – 12h30</div>
+                                    <div className="bg-secondary text-white py-2 px-4 rounded-lg text-center font-bold shadow-sm">13h30 – 15h30</div>
+                                    <div className="bg-secondary text-white py-2 px-4 rounded-lg text-center font-bold shadow-sm">16h30 – 18h30</div>
+                                </div>
+                                <p className="text-sm text-muted-foreground italic">
+                                    (Samedis et dimanches – supplément de 60€ le dimanche)
+                                </p>
+                            </div>
+
+                            {/* Pricing */}
+                            <div className="bg-primary/5 rounded-2xl p-6">
+                                <h3 className="font-heading font-bold text-xl mb-4 flex items-center gap-2">
+                                    <span>💰</span> Tarifs
+                                </h3>
+                                <ul className="space-y-2 text-muted-foreground mb-4">
+                                    <li><strong>20€</strong> par enfant</li>
+                                    <li><strong>180€</strong> forfait animateur</li>
+                                    <li>Base minimum : <strong>8 enfants</strong></li>
+                                    <li>À partir de 12 enfants : animateur assistant (<strong>+90€</strong>)</li>
+                                </ul>
+                                <div className="bg-white/50 p-3 rounded-lg text-sm border border-primary/10 inline-block">
+                                    Acompte de <strong>180€</strong> à la réservation
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, Users, Gift, MessageSquare, Send } from "lucide-react";
+import { Calendar, Users, Gift, MessageSquare, Send, Clock } from "lucide-react";
 
 export default function BookingForm() {
     const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ export default function BookingForm() {
         count: "8",
         name: "",
         email: "",
+        slot: "",
         message: "",
     });
 
@@ -17,7 +18,24 @@ export default function BookingForm() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Booking Request:", formData);
+
+        const subject = `Nouvelle demande d'anniversaire - ${formData.name}`;
+        const body = `
+Nom: ${formData.name}
+Email/Tél: ${formData.email}
+Date souhaitée: ${formData.date}
+Âge fêté: ${formData.age} ans
+Nombre d'enfants: ${formData.count}
+Créneau: ${formData.slot}
+
+Message:
+${formData.message}
+        `.trim();
+
+        const mailtoLink = `mailto:lamaisondespetitsloups@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        window.location.href = mailtoLink;
+
         setSubmitted(true);
     };
 
@@ -33,8 +51,7 @@ export default function BookingForm() {
                 </div>
                 <h3 className="text-xl font-bold text-green-800 mb-2">Demande envoyée !</h3>
                 <p className="text-green-700">
-                    Merci {formData.name} ! Nous avons bien reçu votre demande pour l'anniversaire de vos {formData.age} ans.
-                    Nous vous rappellerons très vite pour confirmer la date.
+                    Merci {formData.name} ! Nous avons bien reçu votre demande pour l'anniversaire de votre enfant. Nous vous rappellerons très vite pour confirmer la date.
                 </p>
                 <button
                     onClick={() => setSubmitted(false)}
@@ -133,6 +150,25 @@ export default function BookingForm() {
                     />
                 </div>
 
+
+
+                <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                        <Clock size={16} className="text-primary" /> Créneau souhaité
+                    </label>
+                    <select
+                        name="slot"
+                        value={formData.slot}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white"
+                    >
+                        <option value="">Sélectionner un horaire</option>
+                        <option value="10h30-12h30">10h30 – 12h30</option>
+                        <option value="13h30-15h30">13h30 – 15h30</option>
+                        <option value="16h30-18h30">16h30 – 18h30</option>
+                    </select>
+                </div>
+
                 <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground flex items-center gap-2">
                         <MessageSquare size={16} className="text-primary" /> Message / Précisions
@@ -156,7 +192,7 @@ export default function BookingForm() {
                 <p className="text-center text-xs text-muted-foreground mt-4">
                     * Ceci est une pré-réservation. Nous vous recontacterons pour valider les disponibilités (validation manuelle).
                 </p>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 }
