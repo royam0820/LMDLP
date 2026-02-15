@@ -1,13 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Hero() {
+interface HeroProps {
+    vitrineImage: string | null;
+}
+
+export default function Hero({ vitrineImage }: HeroProps) {
     return (
         <section className="relative h-[60vh] min-h-[500px] w-full flex items-start justify-center text-center text-white pt-24 md:pt-40">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="/images/ldmp-vitrine.jpg"
+                    src={vitrineImage || "/images/ldmp-vitrine.jpg"}
                     alt="Vitrine La Maison des Petits Loups"
                     fill
                     className="object-cover brightness-75"
