@@ -55,15 +55,30 @@ With every OVH domain, you are entitled to **1 free email account** (5GB storage
 1.  In your OVH Manager, go to **Web Cloud** > **Domains** > **lmdpl.fr**.
 2.  Look for "Web Hosting" or "Hébergement Web" in the "General Information" box.
 3.  If it says "None" or "Aucun", click on the **...** (three dots) next to it and select **Activate included hosting** (Start10M).
-4.  Follow the activation steps (it's free).
-5.  Once active (can take ~15 mins), go to the **Emails** tab.
-6.  Click **Create an email address**.
-7.  Create your address (e.g., `contact@lmdpl.fr`).
-8.  You can then access your emails via OVH Webmail (https://www.ovh.com/fr/mail/) or configure it on your phone/Outlook.
+4.  Follow the activation steps (it's free, select "DNS MX Record" if asked).
+5.  Wait about 10-15 minutes for activation.
+
+### How to Create Your Email Account
+Once the hosting is active:
+
+1.  Go to the **Emails** tab (still under `lmdpl.fr`).
+2.  On the right side, click **Create an email address**.
+3.  **Account Name**: Enter the prefix you want (e.g., `contact` or `info`).
+4.  **Description**: Enter a display name (e.g., "La Maison des Petits Loups").
+5.  **Password**: Create a strong password.
+6.  **Size**: Leave at 5GB (max).
+7.  Click **Next** and **Confirm**.
+
+### How to Check Your Emails
+You can access your emails directly via OVH Webmail:
+*   URL: **https://www.ovh.com/fr/mail/**
+*   Login: `contact@lmdpl.fr` (your full email)
+*   Password: The one you just created.
 
 ## Summary Checklist
 - [ ] Add domain in Vercel.
 - [ ] Add A Record in OVH.
 - [ ] Add CNAME Record in OVH.
 - [ ] Add CORS origins in Sanity Management Dashboard.
-- [ ] (Optional) Activate Start10M hosting for free email.
+- [ ] Activate Start10M hosting for free email.
+- [ ] Create email account (`contact@lmdpl.fr`).
