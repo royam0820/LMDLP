@@ -10,7 +10,7 @@ export const PRODUCTS_QUERY = defineQuery(`*[_type == "product"] | order(name as
   isNew
 }`);
 
-export const FEATURED_PRODUCTS_QUERY = defineQuery(`*[_type == "product" && isNew == true] | order(name asc) [0...8] {
+export const FEATURED_PRODUCTS_QUERY = defineQuery(`*[_type == "product" && isNew == true] | order(name asc) [0...12] {
   _id,
   name,
   "slug": slug.current,

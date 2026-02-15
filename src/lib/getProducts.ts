@@ -38,5 +38,5 @@ export async function getFeaturedProducts(): Promise<Product[]> {
         console.warn("Sanity fetch failed, falling back to local data:", error);
     }
     // Fallback: Local filtering
-    return localProducts.filter(p => p.isNew).slice(0, 8);
+    return localProducts.filter(p => p.isNew).slice(0, 12);
 }
