@@ -7,7 +7,7 @@ export default async function FeaturedProducts() {
     const displayProducts = await getFeaturedProducts();
 
     return (
-        <section className="py-16 bg-white overflow-hidden">
+        <section className="pt-16 pb-4 bg-white overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-end mb-6">
                     <div>

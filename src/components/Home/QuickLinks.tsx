@@ -3,7 +3,7 @@ import { Cake, Paintbrush } from "lucide-react";
 
 export default function QuickLinks() {
     return (
-        <section className="py-16 bg-background">
+        <section className="pt-4 pb-16 bg-background">
             <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
                 {/* Anniversaires */}
                 <div className="bg-secondary/10 rounded-3xl p-8 md:p-12 flex flex-col items-start justify-center relative overflow-hidden group">
