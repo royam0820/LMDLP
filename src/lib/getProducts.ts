@@ -7,6 +7,7 @@ import { products as localProducts, Product } from "@/data/products";
 const mapSanityToProduct = (sanityItem: any): Product => ({
     id: sanityItem._id,
     name: sanityItem.name,
+    slug: sanityItem.slug,
     // If image is present, build URL, else fallback to placeholder or keep undefined (handled by component)
     image: sanityItem.image ? urlFor(sanityItem.image).url() : "/images/placeholder.png",
     age: sanityItem.age,

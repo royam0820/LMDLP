@@ -46,7 +46,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
                             key={product.id}
                             className="flex-[0_0_100%] min-w-0 pl-4 sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%]"
                         >
-                            <ProductCard product={product} />
+                            <ProductCard product={product} truncate={true} />
                         </div>
                     ))}
                 </div>

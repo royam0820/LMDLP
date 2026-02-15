@@ -1,8 +1,16 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Product } from "@/data/products";
 import { Check, Info } from "lucide-react";
 
-export default function ProductCard({ product }: { product: Product }) {
+interface ProductCardProps {
+    product: Product;
+    truncate?: boolean;
+}
+
+export default function ProductCard({ product, truncate = false }: ProductCardProps) {
+    const descriptionClass = truncate ? "line-clamp-2" : "";
+
     return (
         <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col h-full">
             <div className="relative aspect-square bg-muted/50 overflow-hidden">
@@ -27,13 +35,22 @@ export default function ProductCard({ product }: { product: Product }) {
                 <h3 className="font-heading font-bold text-xl text-foreground mb-2 group-hover:text-primary transition-colors">
                     {product.name}
                 </h3>
-                <p className="text-muted-foreground text-sm mb-4 flex-grow">
+                <p className={`text-muted-foreground text-sm mb-4 flex-grow ${descriptionClass}`}>
                     {product.description}
                 </p>
 
-                <div className="mt-auto pt-4 border-t border-gray-50 flex items-center text-sm text-green-600 font-medium">
-                    <Check size={16} className="mr-2" /> Disponible en boutique
-                </div>
+                {truncate && product.slug ? (
+                    <Link
+                        href={`/boutique/${product.slug}`}
+                        className="text-primary text-sm font-bold hover:underline mt-auto inline-block"
+                    >
+                        Voir plus
+                    </Link>
+                ) : (
+                    <div className="mt-auto pt-4 border-t border-gray-50 flex items-center text-sm text-green-600 font-medium">
+                        <Check size={16} className="mr-2" /> Disponible en boutique
+                    </div>
+                )}
             </div>
         </div>
     );
