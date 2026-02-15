@@ -31,6 +31,8 @@ Reusable React components used across the pages.
 
 *   `Header.tsx`: The top navigation bar.
 *   `Footer.tsx`: The site footer.
+*   `LogoText.tsx`: Reusable component for the colorful "La Maison des Petits Loups" text.
+*   `StudioWrapper.tsx`: Wrapper for the Sanity Studio to handle React 19 compatibility.
 *   `Home/`: Components specific to the Homepage (Hero banner, Featured products, Reviews).
 *   `Workshops/`: Components for the Atelier section (WorkshopList, WorkshopCard).
 *   `Shop/`: Components for the Boutique (ProductCard).
@@ -41,16 +43,20 @@ Reusable React components used across the pages.
 Logic related to the content management system.
 
 *   `schemaTypes/`: The definitions of your data.
-    *   `atelierType.ts`: Defines what an "Atelier" looks like (title, date, price...).
+    *   `atelierType.ts`: Defines what an "Atelier" looks like.
     *   `productType.ts`: Defines a "Product".
     *   `testimonialType.ts`: Defines a "Review".
+    *   `homePage.ts`: Singleton for managing homepage content (e.g., Vitrine image).
+    *   `anniversaryPage.ts`: Singleton for managing anniversary pricing and formulas.
 *   `lib/client.ts`: The connection to Sanity. This is where the app fetches data.
-*   `queries.ts`: Collection of GROQ queries used to request specific data (e.g., "Get me the 3 latest reviews").
-*   `structure.ts`: Configuration for how the Studio menu looks.
+*   `queries.ts`: Collection of GROQ queries used to request specific data.
+*   `structure.ts`: Configuration for how the Studio menu looks (includes "Page d'accueil" and "Page Anniversaires" singletons).
 *   `env.ts`: Helper to read environment variables (Project ID, Dataset).
 
 ### 4. Utilities (`src/lib/` & `src/data/`)
 *   `src/lib/`: Helper functions.
+    *   `getHomePage.ts`: Fetches data for the homepage.
+    *   `getAnniversaryPage.ts`: Fetches data for the anniversary page.
 *   `src/data/`: Static data (if any) or mock data used before the CMS was ready.
 
 ## Key Files for Maintenance
