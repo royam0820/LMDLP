@@ -32,7 +32,7 @@ Message:
 ${formData.message}
         `.trim();
 
-        const mailtoLink = `mailto:lamaisondespetitsloups@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const mailtoLink = `mailto:contact@lmdpl.fr?cc=lamaisondespetitsloups@gmail.com&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         window.location.href = mailtoLink;
 
