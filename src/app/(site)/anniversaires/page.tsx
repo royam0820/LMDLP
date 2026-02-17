@@ -59,7 +59,7 @@ export default async function AnniversairesPage() {
                 <div className="grid lg:grid-cols-2 gap-12 items-start">
 
                     {/* Left Column: Details */}
-                    <div className="space-y-8 mt-10 lg:mt-0 order-2 lg:order-1">
+                    <div className="space-y-8 mt-10 lg:mt-0">
                         {/* Image */}
                         <div className="relative rounded-3xl overflow-hidden aspect-video shadow-lg mb-8">
                             {/* Placeholder using vitrine image for now since we don't have distinct birthday room pics */}
@@ -123,7 +123,7 @@ export default async function AnniversairesPage() {
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="order-1 lg:order-2 sticky top-24">
+                    <div className="sticky top-24">
                         <BookingForm />
                     </div>
 
