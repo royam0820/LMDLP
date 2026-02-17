@@ -15,28 +15,34 @@ export default function BookingForm() {
     });
 
     const [submitted, setSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError("");
 
-        const subject = `Nouvelle demande d'anniversaire - ${formData.name}`;
-        const body = `
-Nom: ${formData.name}
-Email/Tél: ${formData.email}
-Date souhaitée: ${formData.date}
-Âge fêté: ${formData.age} ans
-Nombre d'enfants: ${formData.count}
-Créneau: ${formData.slot}
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-Message:
-${formData.message}
-        `.trim();
+            if (!response.ok) {
+                throw new Error('Une erreur est survenue lors de l\'envoi.');
+            }
 
-        const mailtoLink = `mailto:contact@lmdpl.fr?cc=lamaisondespetitsloups@gmail.com&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        window.location.href = mailtoLink;
-
-        setSubmitted(true);
+            setSubmitted(true);
+        } catch (err) {
+            console.error(err);
+            setError("Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -53,8 +59,22 @@ ${formData.message}
                 <p className="text-green-700">
                     Merci {formData.name} ! Nous avons bien reçu votre demande pour l'anniversaire de votre enfant. Nous vous rappellerons très vite pour confirmer la date.
                 </p>
+                <div className="mt-4 text-sm text-green-600">
+                    Un email de confirmation a été envoyé à notre équipe.
+                </div>
                 <button
-                    onClick={() => setSubmitted(false)}
+                    onClick={() => {
+                        setSubmitted(false);
+                        setFormData({
+                            date: "",
+                            age: "",
+                            count: "8",
+                            name: "",
+                            email: "",
+                            slot: "",
+                            message: "",
+                        });
+                    }}
                     className="mt-6 text-sm text-green-600 hover:text-green-800 underline"
                 >
                     Envoyer une autre demande
@@ -185,9 +205,10 @@ ${formData.message}
 
                 <button
                     type="submit"
-                    className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                    disabled={isLoading}
+                    className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Envoyer la demande <Send size={20} />
+                    {isLoading ? 'Envoi en cours...' : 'Envoyer la demande'} <Send size={20} />
                 </button>
                 <p className="text-center text-xs text-muted-foreground mt-4">
                     * Ceci est une pré-réservation. Nous vous recontacterons pour valider les disponibilités (validation manuelle).
