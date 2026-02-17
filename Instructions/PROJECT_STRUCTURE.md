@@ -22,6 +22,7 @@ This folder contains the routes and pages of the website (Next.js App Router).
         *   `page.tsx`: List of workshops (`/ateliers`).
         *   `[slug]/page.tsx`: Individual workshop details page (dynamic route).
     *   `contact/page.tsx`: Contact page (`/contact`).
+    *   `api/contact/route.ts`: API Endpoint for sending emails (Server-side).
 *   `studio`: The route for the Sanity CMS Studio (`/studio`). This is where the content editors log in.
 *   `layout.tsx`: The main wrapper for the entire site. Contains the `<html>`, `<body>`, Navbar, Footer, and fonts.
 *   `globals.css`: The global stylesheet (Tailwind CSS imports).
@@ -69,3 +70,4 @@ Logic related to the content management system.
 ## Environment Variables (.env.local)
 *   `NEXT_PUBLIC_SANITY_PROJECT_ID`: Your unique Sanity project ID.
 *   `NEXT_PUBLIC_SANITY_DATASET`: The dataset to use (usually `development` locally and `production` on Vercel).
+*   `SMTP_PASSWORD`: The password for the OVH email account (used for sending emails securely).

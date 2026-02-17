@@ -73,7 +73,22 @@ Once the hosting is active:
 You can access your emails directly via OVH Webmail:
 *   URL: **https://www.ovh.com/fr/mail/**
 *   Login: `contact@lmdpl.fr` (your full email)
+*   Login: `contact@lmdpl.fr` (your full email)
 *   Password: The one you just created.
+
+## Step 4: Configure Email Sending (Vercel)
+To allow your website to send emails using this new account, you must add your password to Vercel securely.
+
+1.  Go to your **Vercel Dashboard** > Select Project **LMDPL**.
+2.  Go to **Settings** > **Environment Variables**.
+3.  Add a new variable:
+    *   **Key**: `SMTP_PASSWORD`
+    *   **Value**: (Enter your OVH email password here)
+4.  Click **Save**.
+5.  **Important**: You must **Redeploy** your project for this change to take effect.
+    *   Go to **Deployments** tab.
+    *   Click the three dots (`...`) next to the latest deployment.
+    *   Select **Redeploy**.
 
 ## Summary Checklist
 - [ ] Add domain in Vercel.
