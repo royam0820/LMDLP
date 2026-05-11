@@ -70,7 +70,7 @@ export default function ContactPage() {
                                     <a href="tel:+33147727371" className="flex items-center gap-2 text-primary font-medium hover:underline">
                                         <Phone size={18} /> 01 47 72 73 71
                                     </a>
-                                    <a href="mailto:contact@lmdpl.fr" className="flex items-center gap-2 text-primary font-medium hover:underline">
+                                    <a href="mailto:contact@lmdpl.fr?cc=lamaisondespetitsloups@gmail.com" className="flex items-center gap-2 text-primary font-medium hover:underline">
                                         <Mail size={18} /> contact@lmdpl.fr
                                     </a>
                                 </div>
