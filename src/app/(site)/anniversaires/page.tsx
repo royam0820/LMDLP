@@ -1,11 +1,24 @@
 import BookingForm from "@/components/Forms/BookingForm";
-import Image from "next/image";
 import { getAnniversaryPage } from "@/lib/getAnniversaryPage";
+import BirthdayGallery, { BirthdayPhoto } from "@/components/Anniversaires/BirthdayGallery";
 
 export const metadata = {
     title: "Anniversaires | La Maison des Petits Loups",
     description: "Organisez un anniversaire inoubliable pour votre enfant à Puteaux.",
 };
+
+const birthdayPhotos: BirthdayPhoto[] = [
+    { src: "/images/anniversaires/theme-1.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-2.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-3.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-4.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-5.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-6.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-7.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-8.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-9.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+    { src: "/images/anniversaires/theme-10.jpeg", alt: "Fête d'anniversaire à La Maison des Petits Loups" },
+];
 
 export default async function AnniversairesPage() {
     const data = await getAnniversaryPage();
@@ -60,16 +73,8 @@ export default async function AnniversairesPage() {
 
                     {/* Left Column: Details */}
                     <div className="space-y-8 mt-10 lg:mt-0">
-                        {/* Image */}
-                        <div className="relative rounded-3xl overflow-hidden aspect-video shadow-lg mb-8">
-                            {/* Placeholder using vitrine image for now since we don't have distinct birthday room pics */}
-                            <Image
-                                src="/images/birthday-party.jpg"
-                                alt="Espace Anniversaire"
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
+                        {/* Photo carousel — replaces the static hero image */}
+                        <BirthdayGallery photos={birthdayPhotos} />
 
                         <div className="space-y-8">
 
@@ -87,6 +92,21 @@ export default async function AnniversairesPage() {
                                     ))}
                                 </ul>
                             </div>
+
+                            {/* Video link — lightweight, no media downloaded until opened */}
+                            <a
+                                href="/videos/anniversaires/birthday-highlight.mp4"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-primary font-heading font-semibold hover:underline underline-offset-4 transition-colors"
+                            >
+                                <span className="bg-primary/10 rounded-full p-1.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-primary">
+                                        <path d="M8 5v14l11-7L8 5z" />
+                                    </svg>
+                                </span>
+                                Voir une fête en vidéo 🎥
+                            </a>
 
                             {/* Slots */}
                             <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
