@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Check, Info } from "lucide-react";
 import { Metadata } from "next";
+import ProductActions from "@/components/Shop/ProductActions";
 
 interface Props {
     params: Promise<{ slug: string }>;
@@ -74,32 +75,33 @@ export default async function ProductPage({ params }: Props) {
 
                     {/* Right Column: Details */}
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-3 mb-6">
+                        <div className="flex flex-wrap items-center gap-3 mb-6">
+                            {product.sku && (
+                                <span className="bg-[#F1F5F9] text-[#475569] border border-[#CBD5E1] font-mono text-xs font-bold px-3.5 py-2 rounded-full">
+                                    Réf : {product.sku}
+                                </span>
+                            )}
                             <span className="bg-primary/10 text-primary font-bold px-4 py-2 rounded-full flex items-center gap-2">
                                 <Info size={18} /> {product.age}
                             </span>
-                            <span className="text-green-600 font-medium flex items-center gap-2">
-                                <Check size={18} /> En stock magasin
+                            <span className="text-green-700 font-bold flex items-center gap-2">
+                                <Check size={18} className="text-green-600" /> Disponible en boutique
                             </span>
                         </div>
 
-                        <h2 className="text-2xl font-heading font-bold mb-4">Description</h2>
+                        <h2 className="text-2xl font-heading font-bold mb-3">Description</h2>
                         <div className="prose prose-lg text-muted-foreground mb-8">
                             <p>{product.description}</p>
                         </div>
 
-                        <div className="mt-auto bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
-                            <h3 className="font-bold text-lg mb-2">Envie de l'acheter ?</h3>
-                            <p className="text-muted-foreground mb-4">
-                                Ce produit est disponible directement dans notre boutique à Puteaux.
-                                Passez nous voir pour le découvrir !
-                            </p>
-                            <Link
-                                href="/contact"
-                                className="inline-flex items-center justify-center w-full md:w-auto bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-primary/90 transition-colors"
-                            >
-                                Voir les horaires et l'adresse
-                            </Link>
+                        {/* Click & Collect actions block */}
+                        <ProductActions product={product} />
+
+                        <div className="mt-6 text-center text-xs text-muted-foreground">
+                            Une question sur ce produit ? Appelez-nous au{" "}
+                            <a href="tel:+33147727371" className="text-primary font-bold hover:underline">
+                                01 47 72 73 71
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -25,10 +25,11 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('author').title('Auteurs'),
       S.divider(),
       S.documentTypeListItem('product').title('Produits (Boutique)'),
+      S.documentTypeListItem('seasonalCampaign').title('Campagnes & Sélections Saisonnières'),
       S.documentTypeListItem('atelier').title('Ateliers & Stages'),
       S.documentTypeListItem('testimonial').title('Témoignages'),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !['post', 'category', 'author', 'product', 'atelier', 'testimonial', 'homePage', 'anniversaryPage'].includes(item.getId()!),
+        (item) => item.getId() && !['post', 'category', 'author', 'product', 'seasonalCampaign', 'atelier', 'testimonial', 'homePage', 'anniversaryPage'].includes(item.getId()!),
       ),
     ])

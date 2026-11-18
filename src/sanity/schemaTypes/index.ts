@@ -9,10 +9,22 @@ import { productType } from './productType'
 import { atelierType } from './atelierType'
 
 import { testimonialType } from './testimonialType'
+import { seasonalCampaignType } from './seasonalCampaignType'
 
 import { homePage } from './homePage'
 import { anniversaryPage } from './anniversaryPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [blockContentType, categoryType, postType, authorType, productType, atelierType, testimonialType, homePage, anniversaryPage],
+  types: [
+    blockContentType,
+    categoryType,
+    postType,
+    authorType,
+    productType,
+    seasonalCampaignType,
+    atelierType,
+    testimonialType,
+    homePage,
+    anniversaryPage
+  ],
 }

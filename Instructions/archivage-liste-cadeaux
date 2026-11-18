@@ -1,0 +1,30 @@
+### Comment fonctionne l'archivage automatique :
+
+1. **Calcul de la date limite :**
+   - Le système prend la date de la fête (`eventDate`), ou la date de création si aucune date n'a été spécifiée, et y ajoute **15 jours**.
+2. **Pendant les 15 jours :**
+   - La liste reste 100% active, les invités peuvent réserver leurs cadeaux et laisser des mots doux.
+3. **Après les 15 jours (Liste archivée) :**
+   - **L'URL reste accessible :** Les parents et la famille ne tombent pas sur une erreur 404 désagréable ; ils peuvent toujours voir la sélection et relire avec émotion les petits mots doux offerts.
+   - **Bannière d'information :** Un encart ambré indique : *« 📦 Liste archivée : L'événement a eu lieu il y a plus de 15 jours. Les réservations sont désormais clôturées. Merci à tous les participants ! »*
+   - **Verrouillage des réservations :** Les boutons de réservation sont désactivés avec la mention *« Liste archivée »* pour éviter toute nouvelle commande hors délai et protéger les stocks de la boutique.
+
+---
+
+### Fonctionnement technique en production :
+
+1. **Archivage dynamique en temps réel (Just-in-Time) :**
+   - **Aucune intervention manuelle requise :** Véronique n'a pas besoin de cocher une case ou de fermer une liste manuellement.
+   - **Aucun script ou tâche de fond (Cron job) nécessaire :** L'archivage est évalué côté serveur à chaque requête. Dès qu'un visiteur ou un parent consulte l'URL `/liste/[slug]`, le serveur compare l'horodatage actuel (`new Date()`) avec la date d'échéance calculée (`archiveDate = eventDate + 15 jours`).
+   - Si `now > archiveDate`, la liste est instantanément flaggée comme `isArchived: true`.
+
+2. **Double verrouillage de sécurité (Interface & API) :**
+   - **Sécurité visuelle (UI) :** Les boutons « Choisir ce cadeau » se transforment en boutons grisés non cliquables « Liste archivée », empêchant l'ouverture du panier de réservation.
+   - **Sécurité serveur (API `/api/gift-lists/[slug]/reserve`) :** Si un utilisateur contourne l'interface ou rejoue une requête réseau POST, l'API exécute `isListArchived(list)` et rejette immédiatement la demande avec une erreur HTTP 400 (*« Cette liste de cadeaux est archivée. Les réservations sont clôturées. »*).
+
+3. **Préservation totale des données (Souvenirs des familles) :**
+   - Les listes archivées ne sont **jamais supprimées** de la base de données.
+   - L'historique complet (qui a offert quel cadeau, date de réservation, petits mots doux d'affection) reste intact et consultable pour toujours.
+
+4. **Flexibilité pour la boutique :**
+   - Si un parent prévient Véronique que sa fête a été reportée, il suffit de décaler la date de l'événement (`eventDate`), et la liste redevient active automatiquement sans aucune manipulation technique complexe.

@@ -3,15 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import LogoText from "./LogoText";
+import { useCart } from "@/context/CartContext";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    const { totalItems, openCart } = useCart();
 
     const links = [
         { href: "/", label: "Accueil" },
         { href: "/boutique", label: "La Boutique" },
+        { href: "/creer-liste", label: "Listes Cadeaux" },
         { href: "/anniversaires", label: "Anniversaires" },
         { href: "/ateliers", label: "Ateliers & Stages" },
         { href: "/contact", label: "Contact" },
@@ -44,6 +47,22 @@ export default function Header() {
                             {link.label}
                         </Link>
                     ))}
+                    
+                    {/* Cart Button */}
+                    <button
+                        onClick={openCart}
+                        aria-label="Mon Panier Click & Collect"
+                        className="relative p-2.5 rounded-full bg-secondary/10 text-secondary hover:bg-secondary/20 transition-all flex items-center gap-2 font-bold text-sm"
+                    >
+                        <ShoppingBag size={20} />
+                        <span className="hidden lg:inline text-xs">Click & Collect</span>
+                        {totalItems > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-secondary text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm animate-scale">
+                                {totalItems}
+                            </span>
+                        )}
+                    </button>
+
                     <Link
                         href="/anniversaires"
                         className="bg-primary text-white px-5 py-2 rounded-full font-bold hover:bg-primary/90 transition-colors shadow-md"
@@ -52,13 +71,28 @@ export default function Header() {
                     </Link>
                 </nav>
 
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden p-2 text-foreground"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    {isOpen ? <X size={28} /> : <Menu size={28} />}
-                </button>
+                {/* Right actions on Mobile */}
+                <div className="md:hidden flex items-center gap-2">
+                    <button
+                        onClick={openCart}
+                        aria-label="Mon Panier Click & Collect"
+                        className="relative p-2 rounded-full bg-secondary/10 text-secondary hover:bg-secondary/20 transition-all"
+                    >
+                        <ShoppingBag size={22} />
+                        {totalItems > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-secondary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                                {totalItems}
+                            </span>
+                        )}
+                    </button>
+
+                    <button
+                        className="p-2 text-foreground"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        {isOpen ? <X size={28} /> : <Menu size={28} />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Navigation */}

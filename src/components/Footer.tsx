@@ -32,6 +32,7 @@ export default function Footer() {
                     <h3 className="font-heading font-bold text-foreground text-lg mb-4">À découvrir</h3>
                     <ul className="space-y-2">
                         <li><Link href="/boutique" className="hover:text-primary transition-colors">La Boutique</Link></li>
+                        <li><Link href="/creer-liste" className="hover:text-primary transition-colors">Listes de Cadeaux</Link></li>
                         <li><Link href="/anniversaires" className="hover:text-primary transition-colors">Formules Anniversaires</Link></li>
                         <li><Link href="/ateliers" className="hover:text-primary transition-colors">Ateliers & Stages</Link></li>
                         <li><Link href="/contact" className="hover:text-primary transition-colors">Nous contacter</Link></li>

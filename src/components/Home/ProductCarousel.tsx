@@ -33,8 +33,8 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
     const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
     const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
-    // Limit to max 12 items
-    const displayProducts = products.slice(0, 12);
+    // Limit to 8 curated items (ideal for performance and 2 full 4-card desktop views)
+    const displayProducts = products.slice(0, 8);
 
     return (
         <div className="relative group">

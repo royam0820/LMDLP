@@ -1,23 +1,25 @@
 'use client'
 
+// Suppress known harmless React 19 / Sanity styled-components prop warnings in development
+if (typeof window !== 'undefined') {
+    const originalConsoleError = console.error;
+    console.error = (...args: any[]) => {
+        const msg = args[0];
+        if (
+            typeof msg === 'string' &&
+            (msg.includes('disableTransition') ||
+             msg.includes('React does not recognize') ||
+             msg.includes('Extra attributes from the server'))
+        ) {
+            return;
+        }
+        originalConsoleError.apply(console, args);
+    };
+}
+
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../sanity.config'
-import { useEffect } from 'react'
 
 export default function Studio() {
-    useEffect(() => {
-        const originalError = console.error
-        console.error = (...args) => {
-            if (typeof args[0] === 'string' && args[0].includes('disableTransition')) {
-                return
-            }
-            originalError.call(console, ...args)
-        }
-
-        return () => {
-            console.error = originalError
-        }
-    }, [])
-
     return <NextStudio config={config} />
 }

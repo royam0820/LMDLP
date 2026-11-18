@@ -1,73 +1,104 @@
-# Project Structure Documentation
+# Structure du Projet — La Maison des Petits Loups (V1)
 
-This document provides an overview of the **La Maison des Petits Loups (LMDPL)** codebase structure. The project is built with **Next.js 15+ (App Router)** and uses **Sanity CMS** for content management.
+Ce document fournit une cartographie détaillée de l'arborescence du projet **La Maison des Petits Loups (LMDPL)**. L'application est construite avec **Next.js 15+ (App Router)** et utilise **Sanity CMS** pour la gestion de contenu, ainsi que **Nodemailer** pour les notifications transactionnelles.
 
-## Root Directory
-*   `src/`: Contains all the source code for the application.
-*   `public/`: Static assets like images and fonts.
-    *   `images/`: Stores images used in the site (logos, placeholders).
-*   `Instructions/`: Documentation files (PRD, Guides, Setup info).
-*   `sanity.config.ts`: Configuration file for the Sanity Studio (plugins, project ID, dataset).
-*   `sanity.cli.ts`: Configuration for the Sanity CLI tool.
+---
 
-## Source Code (`src/`)
+## 📁 Racine du Projet
 
-### 1. Application (`src/app/`)
-This folder contains the routes and pages of the website (Next.js App Router).
+* `src/` : Code source complet de l'application (pages, composants, logique métier).
+* `public/` : Fichiers statiques servis directement par le serveur web (images, logos, favicon).
+* `Instructions/` : Documentation fonctionnelle, guides d'installation, règles métier et spécifications V1.
+* `sanity.config.ts` : Configuration de l'espace Sanity Studio (plugins, vision, desk structure).
+* `sanity.cli.ts` : Configuration de l'outil en ligne de commande Sanity.
+* `next.config.ts` : Configuration Next.js (optimisation des images distantes Sanity).
+* `package.json` : Dépendances et scripts de build.
 
-*   **(site)**: A "Route Group". The parenthesis `()` mean it doesn't add to the URL path. It's used to group the public-facing pages together, likely to share a layout.
-    *   `page.tsx`: The Homepage (`/`).
-    *   `boutique/page.tsx`: The Shop page (`/boutique`).
-    *   `ateliers/`: The Workshops section.
-        *   `page.tsx`: List of workshops (`/ateliers`).
-        *   `[slug]/page.tsx`: Individual workshop details page (dynamic route).
-    *   `contact/page.tsx`: Contact page (`/contact`).
-    *   `api/contact/route.ts`: API Endpoint for sending emails (Server-side).
-*   `studio`: The route for the Sanity CMS Studio (`/studio`). This is where the content editors log in.
-*   `layout.tsx`: The main wrapper for the entire site. Contains the `<html>`, `<body>`, Navbar, Footer, and fonts.
-*   `globals.css`: The global stylesheet (Tailwind CSS imports).
+---
 
-### 2. Components (`src/components/`)
-Reusable React components used across the pages.
+## 💻 Code Source (`src/`)
 
-*   `Header.tsx`: The top navigation bar.
-*   `Footer.tsx`: The site footer.
-*   `LogoText.tsx`: Reusable component for the colorful "La Maison des Petits Loups" text.
-*   `StudioWrapper.tsx`: Wrapper for the Sanity Studio to handle React 19 compatibility.
-*   `Home/`: Components specific to the Homepage (Hero banner, Featured products, Reviews).
-*   `Workshops/`: Components for the Atelier section (WorkshopList, WorkshopCard).
-*   `Shop/`: Components for the Boutique (ProductCard).
-*   `Forms/`: Contact or Booking forms.
-*   `JsonLd.tsx`: **[SEO]** Invisible component that adds structured data for Google (Store info, Address).
+### 1. Application & Routage (`src/app/`)
 
-### 3. Sanity CMS (`src/sanity/`)
-Logic related to the content management system.
+* **`(site)/`** : Groupe de routes publiques partageant le même layout (Header avec panier, Footer, polices) :
+  * `page.tsx` : Page d'accueil avec vitrine, carrousel de nouveautés et **bannière ou duo de cartes de campagnes saisonnières**.
+  * `boutique/` :
+    * `page.tsx` : Catalogue complet des jouets et livres avec **barre de filtrage par tranche d'âge** et boutons Click & Collect.
+    * `[slug]/page.tsx` : Fiche détaillée d'un produit avec sélecteur de quantité et ajout direct au panier.
+  * `creer-liste/page.tsx` : Interface de création d'une liste de cadeaux avec **3 occasions** (Anniversaire, Naissance, Autre occasion).
+  * `liste/[slug]/page.tsx` : Consultation publique d'une liste de cadeaux, réservation groupée multi-articles et **bannière d'archivage automatique J+15**.
+  * `selections/[slug]/page.tsx` : Page thématique d'une campagne promotionnelle calendaire (Halloween, Noël, Pâques, Rentrée).
+  * `ateliers/` : Liste et pages de détail (`[slug]`) des ateliers à l'année et stages vacances.
+  * `anniversaires/page.tsx` : Présentation des formules d'animation d'anniversaires.
+  * `contact/page.tsx` : Horaires, formulaire de contact et plan de la boutique.
+  * `layout.tsx` : Structure globale HTML, métadonnées SEO, Navbar et Footer.
+* **`api/`** : Endpoints serveur (Serverless Routes) :
+  * `click-and-collect/route.ts` : Validation de commande panier, génération du code `CC-JJMM-XXXX` et envoi des doubles emails OVH (boutique et client).
+  * `gift-lists/route.ts` : Création et listing des listes de cadeaux.
+  * `gift-lists/[slug]/route.ts` : Récupération d'une liste avec calcul Just-in-Time du statut archivé (`isArchived`).
+  * `gift-lists/[slug]/reserve/route.ts` : Réservation atomique multi-articles (anti-doublon), vérification du statut non-archivé et envoi des emails de notification.
+  * `contact/route.ts` : Traitement des messages envoyés depuis la page contact.
+* **`studio/[[...tool]]/page.tsx`** : Montage de l'interface Sanity Studio sur `/studio`.
 
-*   `schemaTypes/`: The definitions of your data.
-    *   `atelierType.ts`: Defines what an "Atelier" looks like.
-    *   `productType.ts`: Defines a "Product".
-    *   `testimonialType.ts`: Defines a "Review".
-    *   `homePage.ts`: Singleton for managing homepage content (e.g., Vitrine image).
-    *   `anniversaryPage.ts`: Singleton for managing anniversary pricing and formulas.
-*   `lib/client.ts`: The connection to Sanity. This is where the app fetches data.
-*   `queries.ts`: Collection of GROQ queries used to request specific data.
-*   `structure.ts`: Configuration for how the Studio menu looks (includes "Page d'accueil" and "Page Anniversaires" singletons).
-*   `env.ts`: Helper to read environment variables (Project ID, Dataset).
+---
 
-### 4. Utilities (`src/lib/` & `src/data/`)
-*   `src/lib/`: Helper functions.
-    *   `getHomePage.ts`: Fetches data for the homepage.
-    *   `getAnniversaryPage.ts`: Fetches data for the anniversary page.
-*   `src/data/`: Static data (if any) or mock data used before the CMS was ready.
+### 2. Composants React (`src/components/`)
 
-## Key Files for Maintenance
-*   **To change the Menu/Navbar**: Edit `src/components/Header.tsx`.
-*   **To change the Footer**: Edit `src/components/Footer.tsx`.
-*   **To add a new Page**: Create a new folder in `src/app/(site)/` with a `page.tsx` file.
-*   **To change Design/Colors**: Tailwind classes in the components or `src/app/globals.css`.
-*   **To update SEO/Address**: `src/components/JsonLd.tsx` and the `metadata` in `layout.tsx`.
+* **`Shop/`** :
+  * `CartDrawer.tsx` : Tiroir latéral de gestion du panier Click & Collect et formulaire de réservation.
+  * `ProductCard.tsx` : Carte produit réutilisable avec affichage du prix, badge coup de cœur et bouton panier.
+  * `ShopProductGrid.tsx` : Grille dynamique intégrant la barre de filtres par tranche d'âge (*Pills*).
+  * `ProductActions.tsx` : Boutons interactifs sur les fiches produits.
+* **`GiftLists/`** :
+  * `CreateListForm.tsx` : Formulaire de création de liste avec les 3 cartes d'occasion responsive.
+  * `GiftListDetail.tsx` : Vue publique de la liste avec gestion de l'archivage et des statuts réservés.
+  * `MultiGiftReservationModal.tsx` : Panier de sélection multiple et formulaire de réservation invité avec mot doux.
+  * `OccasionBadge.tsx` : Badge coloré visuel identifiant le type d'événement.
+  * `ShareModal.tsx` : Fenêtre de partage direct 1-clic (WhatsApp, SMS, copie de lien).
+* **`Home/`** :
+  * `SeasonalCampaignTeaser.tsx` : Bannière adaptative affichant 1 campagne en solo ou 2 campagnes en **duo de cartes côte à côte**, avec découpe festonnée ("scalloped wave").
+  * `ProductCarousel.tsx` : Carrousel interactif des nouveautés.
+* **`Header.tsx`** : Barre de navigation supérieure avec lien boutique, ateliers, anniversaires, contact et **icône panier avec compteur d'articles**.
+* **`Footer.tsx`** : Pied de page avec horaires, adresse, liens légaux et informations pratiques.
+* **`StudioWrapper.tsx`** : Enveloppe de compatibilité pour Sanity Studio sous React 19.
+* **`JsonLd.tsx`** : Balisage Schema.org pour le référencement naturel local (Google My Business / Maps).
 
-## Environment Variables (.env.local)
-*   `NEXT_PUBLIC_SANITY_PROJECT_ID`: Your unique Sanity project ID.
-*   `NEXT_PUBLIC_SANITY_DATASET`: The dataset to use (usually `development` locally and `production` on Vercel).
-*   `SMTP_PASSWORD`: The password for the OVH email account (used for sending emails securely).
+---
+
+### 3. Contexte & Gestion d'État (`src/context/`)
+
+* **`CartContext.tsx`** : Contexte React fournissant l'état du panier d'achat Click & Collect (`items`, `addItem`, `removeItem`, `updateQuantity`, `clearCart`, `totalCount`, `totalAmount`). Persistance automatique dans le `localStorage` du navigateur.
+
+---
+
+### 4. Données & Persistance (`src/data/`)
+
+* **`gift-lists.json`** : Stockage local structuré des listes de cadeaux créées et de leurs réservations associées.
+* **`products.ts`** : Définition des types et données statiques de repli.
+
+---
+
+### 5. Bibliothèques Utilitaires & Logique Métier (`src/lib/`)
+
+* **`campaignThemes.tsx`** : Moteur de rendu visuel des 5 thèmes de campagne (Halloween, Noël, Pâques, Rentrée, Défaut) comprenant palettes de couleurs et illustrations SVG immersives.
+* **`getSeasonalCampaign.ts`** : Requêtes GROQ Sanity pour extraire les campagnes actives avec `useCdn: false` pour un affichage immédiat.
+* **`giftLists.ts`** : Gestionnaire des listes de cadeaux (lecture/écriture sécurisée, recherche par slug, calcul de la règle d'archivage à J+15).
+* **`ageCategories.ts`** : Définition des 4 univers d'âge pour la boutique et Sanity.
+* **`formatPhone.ts`** : Formatage des numéros de téléphone au standard français (`06 12 34 56 78`).
+* **`getProducts.ts` & `getProduct.ts`** : Requêtes d'extraction des produits depuis Sanity.
+* **`getAteliers.ts`** : Requêtes d'extraction des ateliers et stages vacances.
+
+---
+
+### 6. Sanity CMS (`src/sanity/`)
+
+* **`schemaTypes/`** :
+  * `seasonalCampaignType.ts` : Définition du schéma des campagnes promotionnelles (titre, dates, thème radio, activation, références produits).
+  * `productType.ts` : Schéma produit intégrant le sélecteur d'âge normalisé.
+  * `atelierType.ts` : Schéma des ateliers et stages vacances.
+  * `homePage.ts` : Singleton pour les réglages de la page d'accueil.
+  * `anniversaryPage.ts` : Singleton pour les tarifs et descriptions d'anniversaires.
+  * `testimonialType.ts` : Schéma des avis clients.
+* **`structure.ts`** : Arborescence personnalisée du menu Sanity Studio.
+* **`queries.ts`** : Ensemble des requêtes GROQ centralisées.
+* **`lib/client.ts`** : Client de connexion Sanity configuré.
