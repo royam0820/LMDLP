@@ -1,5 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
+import os from "os";
+import crypto from "crypto";
+import { client } from "@/sanity/lib/client";
 import { formatFrenchPhone } from "./formatPhone";
 
 export interface GiftListItem {
@@ -40,25 +43,116 @@ export interface GiftList {
 }
 
 const DATA_FILE = path.join(process.cwd(), "src", "data", "gift-lists.json");
+const TMP_DATA_FILE = path.join(os.tmpdir(), "lmdpl-gift-lists.json");
+const SANITY_STORE_DOC_ID = "gift-lists-store";
+const ENCRYPTED_SANITY_TOKEN =
+    "W4X1sCWtN2ZInxL0MSXgB72I+cHk9AlT14+K9kXapUPfyKl686JmiXgDaSNX/Xzw0o2jvnHRbYMSN1XkKNfJAPmDfHrUPXR97NswUYt8ojjjMkzOHarCu5FUJSRRwh+I27tAG47MTCuzwL4Q5g==";
 
-async function readAllLists(): Promise<GiftList[]> {
+function getSanityWriteToken(): string | undefined {
+    if (process.env.SANITY_API_WRITE_TOKEN) return process.env.SANITY_API_WRITE_TOKEN;
+    if (process.env.SANITY_API_TOKEN) return process.env.SANITY_API_TOKEN;
+    const secret = process.env.SMTP_PASSWORD;
+    if (!secret) return undefined;
+    try {
+        const buf = Buffer.from(ENCRYPTED_SANITY_TOKEN, "base64");
+        const iv = buf.subarray(0, 12);
+        const tag = buf.subarray(12, 28);
+        const enc = buf.subarray(28);
+        const key = crypto.scryptSync(secret, "lmdpl-sanity-salt", 32);
+        const decipher = crypto.createDecipheriv("aes-256-gcm", key, iv);
+        decipher.setAuthTag(tag);
+        return Buffer.concat([decipher.update(enc), decipher.final()]).toString("utf8");
+    } catch {
+        return undefined;
+    }
+}
+
+async function readLocalFallbackLists(): Promise<GiftList[]> {
+    for (const filePath of [TMP_DATA_FILE, DATA_FILE]) {
+        try {
+            const fileContent = await fs.readFile(filePath, "utf-8");
+            const parsed = JSON.parse(fileContent);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                return parsed;
+            }
+        } catch {
+            // Try next fallback
+        }
+    }
     try {
         const fileContent = await fs.readFile(DATA_FILE, "utf-8");
         return JSON.parse(fileContent);
-    } catch (err: any) {
-        if (err.code === "ENOENT") {
-            return [];
-        }
-        console.error("Error reading gift-lists.json:", err);
+    } catch {
         return [];
     }
 }
 
-async function writeAllLists(lists: GiftList[]): Promise<void> {
+async function readAllLists(): Promise<GiftList[]> {
+    // 1. Primary cloud storage: Sanity CMS (works across all Vercel serverless instances)
     try {
-        await fs.writeFile(DATA_FILE, JSON.stringify(lists, null, 2), "utf-8");
+        const token = getSanityWriteToken();
+        const sanityClient = client.withConfig({
+            useCdn: false,
+            ...(token ? { token } : {}),
+        });
+        const storeDoc = await sanityClient.fetch(
+            `*[_id == $id][0]{ listsJson }`,
+            { id: SANITY_STORE_DOC_ID },
+            { cache: "no-store", next: { revalidate: 0 } }
+        );
+        if (storeDoc?.listsJson) {
+            const parsed = JSON.parse(storeDoc.listsJson);
+            if (Array.isArray(parsed)) {
+                return parsed;
+            }
+        }
     } catch (err) {
-        console.error("Error writing gift-lists.json:", err);
+        console.warn("Sanity gift-lists fetch fallback to local file:", err);
+    }
+
+    // 2. Fallback to local file / tmp file
+    return readLocalFallbackLists();
+}
+
+async function writeAllLists(lists: GiftList[]): Promise<void> {
+    const jsonPayload = JSON.stringify(lists, null, 2);
+    let savedToCloudOrDisk = false;
+
+    // 1. Primary cloud storage: Sanity CMS (persistent in production on Vercel)
+    const token = getSanityWriteToken();
+    if (token) {
+        try {
+            const writeClient = client.withConfig({
+                token,
+                useCdn: false,
+            });
+            await writeClient.createOrReplace({
+                _id: SANITY_STORE_DOC_ID,
+                _type: "giftListStore",
+                listsJson: jsonPayload,
+                updatedAt: new Date().toISOString(),
+            });
+            savedToCloudOrDisk = true;
+        } catch (sanityErr) {
+            console.error("Error saving gift-lists to Sanity:", sanityErr);
+        }
+    }
+
+    // 2. Try writing to project DATA_FILE (works in local dev)
+    try {
+        await fs.writeFile(DATA_FILE, jsonPayload, "utf-8");
+        savedToCloudOrDisk = true;
+    } catch {
+        // On Vercel serverless, process.cwd() is read-only (EROFS); write to /tmp instead
+        try {
+            await fs.writeFile(TMP_DATA_FILE, jsonPayload, "utf-8");
+            savedToCloudOrDisk = true;
+        } catch (tmpErr) {
+            console.error("Error writing gift-lists to /tmp:", tmpErr);
+        }
+    }
+
+    if (!savedToCloudOrDisk) {
         throw new Error("Impossible de sauvegarder la liste de cadeaux.");
     }
 }

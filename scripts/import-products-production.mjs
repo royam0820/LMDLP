@@ -43,19 +43,28 @@ const rows = [
 ];
 
 async function run() {
-  console.log('🚀 Mise à jour des 24 produits dans le dataset Sanity "production"...');
+  console.log('🚀 Mise à jour des 24 produits (publiés + brouillons éventuels) dans le dataset Sanity "production"...');
+  const drafts = await client.fetch('*[_id in path("drafts.**") && _type == "product"]{_id}');
+  const draftIds = new Set(drafts.map((d) => d._id));
+
   for (const row of rows) {
     const normalizedAge = normalizeAge(row.age);
-    await client
-      .patch(row.id)
-      .set({
-        name: row.name,
-        sku: row.sku,
-        price: row.price,
-        age: normalizedAge,
-        isNew: row.isNew,
-      })
-      .commit();
+    const patchData = {
+      name: row.name,
+      sku: row.sku,
+      price: row.price,
+      age: normalizedAge,
+      isNew: row.isNew,
+    };
+
+    await client.patch(row.id).set(patchData).commit();
+
+    const draftId = `drafts.${row.id}`;
+    if (draftIds.has(draftId)) {
+      await client.patch(draftId).set(patchData).commit();
+      console.log(`📝 Brouillon également mis à jour : ${draftId}`);
+    }
+
     console.log(`✅ [${row.sku}] ${row.name} — ${row.price.toFixed(2)} € — Âge: ${normalizedAge} (${row.age})`);
   }
 
